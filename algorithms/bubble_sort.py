@@ -9,12 +9,12 @@ Pseudocode: http://en.wikipedia.org/wiki/Bubble_sort#Pseudocode_implementation
 """
 
 
-def bubble_sort(sequence)
+def bubble_sort(sequence):
 	sorted = False
 	
-	while not sorted
+	while not sorted:
 		sorted = True
-		for i in range(0,len(sequence)-1)
+		for i in range(0,len(sequence)-1):
 			if sequence[i] > sequence[i+1]: #found unsorted
 				sorted = False
 				tmp = sequence[i+1]

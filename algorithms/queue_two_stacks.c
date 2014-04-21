@@ -33,10 +33,15 @@ void stack_push(stack_t s, void* elem)
 		s->max += 8;
 		s->data = (void**)realloc(s->data, s->max * sizeof(void*));
 	}
-	
+	s->data[s->count++] = elem;
 }
 
-void* stack_pop(stack_t s);
+void* stack_pop(stack_t s)
+{
+	if (s->count == 0)
+		return NULL;
+	return s->data[--s->count];
+}
 
 struct queue
 {
@@ -45,11 +50,22 @@ struct queue
 };
 
 
-queue_t queue_init();
-void enqueue(queue_t q, void* elem);
-void* dequeue(queue_t q);
-
-int main(int argc, char** argv)
+queue_t queue_init()
 {
+	inbox = stack_init();
+	outbox = stack_init();
+}
 
+void enqueue(queue_t q, void* elem)
+{
+	stack_push(inbox, elem);
+}
+
+void* dequeue(queue_t q);
+{
+	if (isEmpty(outbox))
+		while (!isEmpty(inbox))
+			stack_push(outbox, stack_pop(inbox));
+	return stack_pop(outbox);
+	
 }

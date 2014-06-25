@@ -2,9 +2,5 @@ algorithms
 ==========
 
 
-Python implementation of:
-mergesort
-quicksort
-bubblesort
-heapsort
+various algorithms and problems that I've tried to solve.
 

@@ -2,15 +2,17 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-char* usage = "Project Euler #67. Usage: ./euler67 [numRows] [file.txt]\n
-			Author: Zeeshan Pirzada\n";
+char* usage = "Project Euler #67. Usage: .//euler67 [numRows] [file.txt]\nAuthor: Zeeshan Pirzada\n";
 
-#define MAX((a),(b))  (((a) > (b)) ? ((a) : (b)))
+#define MAX(a,b)  (((a) > (b)) ? (a) : (b))
 
 int main(int argc, char** argv)
 {
 	if (argc != 3)
+	{	
 		printf("%s", usage);
+		return 0;
+	}
 
 	int rows = atoi(argv[1]);
 	int** tree_array = (int**) malloc(rows * sizeof(int*));
@@ -41,7 +43,8 @@ int main(int argc, char** argv)
 			j = 0;	
 		}
 	}
-	
+
+
 
 	//opt[i][j] contains optimal solution for the jth number in the ith row.
 
@@ -56,6 +59,7 @@ int main(int argc, char** argv)
 		opt[rows-1][k] = tree_array[rows-1][k];
 	}
 
+
 	//compute bottom up answers.
 	for (int k = rows - 2; k >= 0; k--)
 	{
@@ -64,6 +68,7 @@ int main(int argc, char** argv)
 			opt[k][l] = tree_array[k][l] + MAX(opt[k+1][l], opt[k+1][l+1]);
 		}
 	}
+
 
 	printf("The answer is: %d\n.", opt[0][0]);
 	return 0;

@@ -29,7 +29,7 @@ double naivePi(int n)
 			in_square++;
 	}
 
-	return in_circ/in_square;
+	return 4 * in_circ/(in_circ + in_square);
 }
 
 

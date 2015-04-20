@@ -17,6 +17,7 @@ public:
 
 	bool insert(string& a);
 	bool remove(string& a);
+	bool contains(string& a);
 	void printInOrder();
 
 	~Bst();
@@ -57,6 +58,22 @@ Bst::Bst()
 Bst::~Bst()
 {
 	return;
+}
+
+bool Bst::contains(string& a)
+{
+	node *temp = m_head;
+
+	while (temp)
+	{
+		if (a < temp->val)
+			temp = temp->left;
+		else if (a > temp->val)
+			temp = temp->right;
+		else
+			return true;
+	}
+	return false;
 }
 
 bool Bst::insert(string& a)
@@ -110,8 +127,10 @@ bool Bst::remove(string& a)
 			// no children
 			if (temp->left == NULL && temp->right == NULL)
 			{
+				
 				if (temp->parent)
 				{
+					
 					if (temp->leftchild)
 						temp->parent->left = NULL;
 					else
@@ -120,8 +139,11 @@ bool Bst::remove(string& a)
 					delete temp;
 				}
 				else
-					delete m_head;
+				{
+					delete temp;
+					m_head = NULL;
 
+				}
 				return true;
 			}
 
@@ -131,15 +153,23 @@ bool Bst::remove(string& a)
 				if (temp->parent)
 				{
 					if (temp->leftchild)
+					{
+						temp->right->parent = temp->parent;
 						temp->parent->left = temp->right;
+							
+					}
 					else
+					{
+						temp->right->parent = temp->parent;
 						temp->parent->right = temp->right;
 
+					}
 					delete temp;
 				}
 				else
 				{
 					m_head = temp->right;
+					m_head->parent = NULL;
 					delete temp; 
 				}
 				return true;
@@ -152,15 +182,22 @@ bool Bst::remove(string& a)
 				if (temp->parent)
 				{
 					if (temp->leftchild)
+					{
+						temp->left->parent = temp->parent;
 						temp->parent->left = temp->left;
+					}
 					else
+					{
+						temp->left->parent = temp->parent;
 						temp->parent->right = temp->left;
+					}
 
-					delete temp
+					delete temp;
 				}
 				else
 				{
 					m_head = temp->left;
+					m_head->parent = NULL;
 					delete temp;
 				}
 
@@ -185,6 +222,7 @@ bool Bst::remove(string& a)
 					temp2->parent->right = NULL;
 
 				delete temp2;
+				return true;
 
 			}
 
@@ -219,13 +257,18 @@ void Bst::inOrderTraversal(node *temp)
 int main()
 {
 	Bst tree;
-	cout << "Enter in words and they will stay alphabetized, enter word again to remove." << endl;
+	cout << "Enter in words and they will stay alphabetized, enter word again to remove.\n\n" << endl;
 	for (;;)
 	{
 		cout << "Enter a word: ";
 		string a;
 		cin >> a;
-		tree.insert(a);
+		
+		if (tree.contains(a))
+			tree.remove(a);
+		else
+			tree.insert(a);
+		
 		cout << "\n\n>";
 		tree.printInOrder();
 		cout << "\n\n";

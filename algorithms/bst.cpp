@@ -57,7 +57,8 @@ Bst::Bst()
 
 Bst::~Bst()
 {
-	return;
+	while (remove(m_head->val))
+		continue;
 }
 
 bool Bst::contains(string& a)
@@ -257,13 +258,15 @@ void Bst::inOrderTraversal(node *temp)
 int main()
 {
 	Bst tree;
-	cout << "Enter in words and they will stay alphabetized, enter word again to remove.\n\n" << endl;
+	cout << "Enter in words and they will stay alphabetized, enter word again to remove. Type quit() to quit. \n\n" << endl;
 	for (;;)
 	{
 		cout << "Enter a word: ";
 		string a;
 		cin >> a;
 		
+		if (a == "quit()")
+			break;
 		if (tree.contains(a))
 			tree.remove(a);
 		else

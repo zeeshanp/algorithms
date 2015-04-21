@@ -24,7 +24,7 @@ class HashTable
 		}
 		int numBuckets;
 		int numElements;
-		LinkedList buckets[numBuckets];
+		LinkedList<Key, Value> buckets[numBuckets];
 
 };
 

@@ -23,6 +23,38 @@ Bst::~Bst()
 		continue;
 }
 
+int Bst::pathBetweenNodes(string& a, string& b)
+{
+	if (!contains(a) || !contains(b))
+	{
+		cout << "Invalid arguments" << endl;
+		return -1;
+	}
+
+	return pathHelper(m_head, a, b);
+
+}
+
+int Bst::pathHelper(node *temp, string& low, string& high)
+{
+	if (temp == NULL)
+		return 0;
+
+	string a = temp->val;
+
+	if (a == low || a == high)
+		return 1;
+
+	if (a < high && a > low)
+		return 1 + pathHelper(temp->left, low, high) + pathHelper(temp->right, low, high);
+
+	if (a < high)
+		return 1 + pathHelper(temp->left, low, high);
+	else
+		return 1 + pathHelper(temp->right, low, high);
+
+}
+
 bool Bst::contains(string& a)
 {
 	node *temp = m_head;
@@ -196,8 +228,6 @@ bool Bst::remove(string& a)
 			temp = temp->right;
 
 	}
-
-
 	return false;
 }
 
@@ -237,6 +267,17 @@ int main()
 		cout << "\n\n>";
 		tree.printInOrder();
 		cout << "\n\n";
+	}
+	for (;;)
+	{
+		cout << "Enter two words to find distance between them: \n";
+		string a;
+		string b;
+		cin >> a;
+		cin >> b;
+		int i;
+		if ((i = tree.pathBetweenNodes(a, b)) >= 0)
+			cout << i << endl;
 	}
 }
 

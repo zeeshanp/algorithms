@@ -18,6 +18,7 @@ public:
 	bool insert(std::string& a);
 	bool remove(std::string& a);
 	bool contains(std::string& a);
+	int pathBetweenNodes(std::string& a, std::string& b);
 	void printInOrder();
 
 	~Bst();
@@ -36,6 +37,7 @@ private:
 	};
 	
 	void inOrderTraversal(node *temp);
+	int pathHelper(node *temp, std::string& low, std::string& high);
 	node *m_head;
 
 };

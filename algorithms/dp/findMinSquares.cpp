@@ -1,5 +1,8 @@
 #include <iostream>
+#include <cstdlib>
 #include <math.h>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -14,10 +17,10 @@ using namespace std;
 
 bool isSquare(int n) { return sqrt(n) == floor(sqrt(n)); }
 
-void findMinSquares(int n) {
+vector<int> findMinSquares(int n) {
 
-    int *subproblems = new int[n + 1];
-    int *prev = new int[n + 1];
+    vector<int> subproblems(n + 1, 0);
+    vector<int> prev(n + 1, 0);
 
     // base cases.
     subproblems[0] = 0;
@@ -41,21 +44,36 @@ void findMinSquares(int n) {
     
     // backtracking.
     int pos = n;
+    vector<int> res;
     while ( pos != 0 ) {
         int curr = pos;
         int back = prev[pos];
-        cout << sqrt(curr - back) << "^2 + ";
+        res.push_back(sqrt(curr - back));
         pos = back;
     }
-    cout << "0" << endl;
+    return res;
 }
 
 
-int main() {
-    for (;;) {
-        int i;
-        cout << "Enter a number: ";
-        cin >> i;
-        findMinSquares(i);
+int main(int argc, char *argv[]) {
+    
+    if (argc != 2) { 
+        return 0; 
     }
+
+    int in = atoi(argv[1]);
+    vector<int> res = findMinSquares(in);
+
+    cout << in << " = ";    
+    for (int i = 0; i < res.size(); i++) {
+        cout << res[i] << "^2";
+        if (i != res.size() - 1) {
+            cout << " + ";
+        }
+    }
+    cout << endl;
+
 }
+
+
+
